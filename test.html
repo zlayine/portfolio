@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #222222;
+        }
+
+        .container {
+            text-align: center;
+            width: 40%;
+            margin: auto;
+        }
+        
+        .head {
+            padding-top: 100px;
+            position: relative;
+        }
+
+        .head .spotlight {
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            margin: auto;
+            position: relative;
+            top: 20px;
+            z-index: 20;
+            border-radius: 50%;
+        }
+
+        .head .lights {
+            width: 100%;
+            height: 300px;
+        }
+
+        .head .tri-left {
+            width: 0;
+            height: 0;
+            border-top: 330px solid #222222;
+            border-right: 320px solid transparent;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .head .tri-right {
+            width: 0;
+            height: 0;
+            border-top: 330px solid #222222;
+            border-left: 320px solid transparent;
+            position: absolute;
+            z-index: 10;
+            right: 0;
+        }
+        
+        .head .light {
+            height: 300px;
+            animation: broken 5s linear 0s infinite alternate;
+            width: 600px;
+            position: relative;
+            margin: auto;
+        }
+
+        .head .title {
+            font-size: 100px;
+            font-weight: 700;
+            font-family: sans-serif;
+            top: -240px;
+            position: relative;
+            color: #222222;
+        }
+
+        .title ,.title:before {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        .head .title:before {
+            content: 'IZARE';
+            top: 185px;
+            color: #222222a9;
+            left: -19px;
+            transform: scale(1, -1) skewX(30deg);
+            backface-visibility: visible; 
+            z-index: 1;
+        }
+
+
+        .head .subtitle {
+            color: #fff;
+            position: relative;
+            top: -190px;
+            font-size: 80px;
+            font-family: sans-serif;
+        }
+
+        .subtitle .eye:first-child {
+            display: inline-block;
+            position: relative;
+            left: -161px;
+            top: -20px;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: eye 0.1s linear 5s 2 alternate;
+        }
+
+        .subtitle .eye:last-child {
+            display: inline-block;
+            position: relative;
+            left: -119px;
+            top: -20px;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: eye 0.1s linear 5s 2 alternate;
+        }
+
+        @keyframes broken {
+            0% {background-color: rgba(255, 235, 56, 0.658);}
+            37% {background-color: rgba(255, 235, 56, 0.658);}
+            39% {background-color: transparent;}
+            40% {background-color: rgba(255, 235, 56, 0.658);}
+            95% {background-color: rgba(255, 235, 56, 0.658);}
+            99% {background-color: transparent;}
+            100% {background-color: rgba(255, 235, 56, 0.658);}
+        }
+
+        @keyframes eye {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @media (max-width: 900px)
+        {
+            .container {
+                width: 100%;
+            }
+
+            .head .light {
+                width: 100%;
+            }
+
+            .head .tri-left {
+                border-right: 190px solid transparent;
+            }
+
+            .head .tri-right {
+                border-left: 190px solid transparent;
+            }
+
+            .head .title:before {
+                top: 130px;
+                left: -15px;
+            }
+
+            .head .title {
+                font-size: 70px;
+                top: -170px;
+            }
+
+            .head .subtitle {
+                top: -140px;
+                font-size: 40px;
+            }
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="head">
+            <div class="spotlight"></div>
+            <div class="lights">
+                <div class="tri-left"></div>
+                <div class="tri-right"></div>
+                <div class="light"></div>
+            </div>
+            <div class="title">IZARE</div>
+            <div class="subtitle">COMING SOON<div class="eye"></div><div class="eye"></div></div>
+        </div>
+
+    </div>
+</body>
+</html>
