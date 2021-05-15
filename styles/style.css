@@ -723,18 +723,21 @@ section:nth-of-type(3) #gallery .mix .button:hover {
   color: #fff;
 }
 section:nth-of-type(3) #gallery .mix:nth-child(1) .card {
-  background: url("../images/thumb-adsify.jpg") center center/cover;
+  background: url("../images/thumb-rate.png") center center/cover;
 }
 section:nth-of-type(3) #gallery .mix:nth-child(2) .card {
-  background: url("../images/thumb-track.jpg") center center/cover;
+  background: url("../images/thumb-adsify.jpg") center center/cover;
 }
 section:nth-of-type(3) #gallery .mix:nth-child(3) .card {
   background: url("../images/thumb-send.jpg") center center/cover;
 }
 section:nth-of-type(3) #gallery .mix:nth-child(4) .card {
-  background: url("../images/thumb-mod.jpg") center center/cover;
+  background: url("../images/thumb-track.jpg") center center/cover;
 }
 section:nth-of-type(3) #gallery .mix:nth-child(5) .card {
+  background: url("../images/thumb-mod.jpg") center center/cover;
+}
+section:nth-of-type(3) #gallery .mix:nth-child(6) .card {
   background: url("../images/thumb-amines.jpg") center center/cover;
 }
 section:nth-of-type(3) #gallery .mix .card {
@@ -918,10 +921,26 @@ footer .footnote .highlight {
   font-family: "Open Sans";
 }
 
+.slide {
+	width: 700px;
+}
+
+.carousel {
+	left: -375px;
+}
+
 @media screen and (max-width: 400px) {
   section:nth-of-type(3) #gallery .mix .card {
     width: 100vw;
   }
+
+	.slide {
+		width: 375px !important;
+	}
+
+	.carousel {
+		left: -375px !important;
+	}
 }
 
 @media screen and (max-width: 700px) {
@@ -956,6 +975,8 @@ footer .footnote .highlight {
     height: 100px;
     width: 100px;
   }
+
+	
 
   .slide,.carousel-wrap {
     height: 450px;
@@ -1197,6 +1218,9 @@ footer .footnote .highlight {
   display: flex;
   flex-direction: row;
 }
+
+
+
 
 /******* AUDIO ********/
 
@@ -1476,4 +1500,28 @@ footer .footnote .highlight {
 		height: 100vh;
 		justify-content: center;
 	} */
+}
+
+.download {
+
+}
+
+.download .btn {
+  background-color: #fb1f79;
+  border-radius: 17px;
+  border: 0;
+  margin: 0;
+  color: #fff;
+  padding: 8px 15px;
+  font-size: 17px;
+  font-weight: 700;
+  transition: 200ms all;
+}
+
+.download .btn:hover {
+  background-color: #c51675;
+}
+
+.download .btn i{
+  margin-right: 5px;
 }
