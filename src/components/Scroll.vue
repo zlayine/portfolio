@@ -251,6 +251,9 @@ const selectedItemHandler = (item) => {
     }
     if (selectedItem.value === item) {
         selectedItem.value = null;
+        setTimeout(() => {
+            handleScroll();
+        }, 10);
     } else {
         selectedItem.value = item;
     }
