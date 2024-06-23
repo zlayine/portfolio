@@ -64,7 +64,7 @@
                                 <div>
                                     <XMarkIcon
                                         class="close--icon"
-                                        @click="selectedItem = null"
+                                        @click="clearItem"
                                     />
                                 </div>
                                 <div class="card__content">
@@ -200,7 +200,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, h, ref } from 'vue';
 import ReactIcon from './ReactIcon.vue';
 import VueIcon from './VueIcon.vue';
 import GithubIcon from './GithubIcon.vue';
@@ -212,6 +212,7 @@ import { XMarkIcon, DocumentTextIcon, AtSymbolIcon } from '@heroicons/vue/24/out
 import Resume from '../assets/resumeZouheirLayine.pdf';
 
 const selectedItem = ref(null);
+const isMobile = ref(window.innerWidth < 768);
 
 const selectedProject = computed(() => {
     return projects.find((project) => project.key === selectedItem.value);
@@ -255,6 +256,13 @@ const selectedItemHandler = (item) => {
     }
 };
 
+const clearItem = () => {
+    selectedItem.value = null;
+    setTimeout(() => {
+        handleScroll();
+    }, 10);
+};
+
 const projects = [
     {
         key: 'enjin',
@@ -270,7 +278,7 @@ const projects = [
         image: 'https://i.ibb.co/Tm4qnYs/nftio.jpg',
         content:
             "NFT.io is the world's leading next-generation web3 marketplace for NFTs and crypto collectibles. Explore, create, buy, sell, and distribute NFTs and FTs",
-        flyClass: 'card--one card--left',
+        flyClass: 'card--one',
     },
     {
         key: 'evaflor',
@@ -282,7 +290,7 @@ const projects = [
         links: [{ title: 'Evaflor', url: 'https://evaflor.com' }],
         image: 'https://i.ibb.co/5WXyNcH/image.gif',
         content: "Evaflor's web3 app is a decentralized platform for buying, earning parfumes with web3 tokens.",
-        flyClass: 'card--three card--right',
+        flyClass: 'card--three',
     },
     {
         key: 'troof',
@@ -298,7 +306,7 @@ const projects = [
         image: 'https://i.ibb.co/ZHjgTfq/Screen-Shot-2024-06-18-at-23-48-45.png',
         content:
             'Troof is a participatory authentication system that enables businesses to protect their brands and their customers from counterfeiting, and to communicate information about their products to consumers',
-        flyClass: 'card--two card--left',
+        flyClass: 'card--two',
     },
     {
         key: 'leet',
@@ -310,7 +318,7 @@ const projects = [
         image: 'https://i.ibb.co/94D985z/rate-2.png',
         content:
             '1337 is the first to provide IT training in Morocco. Developped a platform for students to improve their restaurant quality and a voting system for various events.',
-        flyClass: 'card--six card--right',
+        flyClass: 'card--six',
     },
     {
         key: 'um6p',
@@ -322,7 +330,7 @@ const projects = [
         image: 'https://i.ibb.co/LQddkxg/mod-0.jpg',
         content:
             'UM6P is a university website. we have developed a platform for students to post their math problems and get help from other students.',
-        flyClass: 'card--five card--left',
+        flyClass: 'card--five',
     },
     {
         key: 'adsify',
@@ -334,7 +342,7 @@ const projects = [
         image: 'https://i.ibb.co/NTGZkBQ/adsify-1.jpg',
         content:
             'Adsify is an advertising spying platform. it allows you to spy on your competitors and see their ads on any social media',
-        flyClass: 'card--four card--right',
+        flyClass: 'card--four',
     },
 ];
 
@@ -342,79 +350,304 @@ const shownProjects = computed(() =>
     projects.filter((project) => (selectedItem.value && project.key === selectedItem.value) || !selectedItem.value)
 );
 
-document.addEventListener('DOMContentLoaded', () => {
+const mobileFactor = isMobile.value ? 0.75 : 0.45;
+
+const cardStartValues = [
+    { x: -window.innerWidth * mobileFactor, y: -10, r: -8, h: 160, w: 320 },
+    { x: window.innerWidth * mobileFactor, y: -50, r: 15, h: 300, w: 220 },
+    { x: -window.innerWidth * mobileFactor, y: -30, r: 6, h: 300, w: 330 },
+    { x: window.innerWidth * mobileFactor, y: -30, r: -5, h: 400, w: 305 },
+    { x: -window.innerWidth * mobileFactor, y: -45, r: -20, h: 525, w: 160 },
+    { x: window.innerWidth * mobileFactor, y: 10, r: 10, h: 160, w: 320 },
+];
+
+const cardDetailsStartValues = [
+    // card one
+    {
+        avatar: {
+            translate: { x: 90, y: 0 },
+            scale: 2,
+        },
+        text: {
+            translate: { x: 220, y: 0 },
+            size: 1.6,
+        },
+    },
+    // card three
+    {
+        avatar: {
+            shrink: {
+                w: 400,
+                h: 250,
+                r: 12,
+            },
+        },
+        text: {
+            translate: { x: 500, y: 0 },
+            size: 1.6,
+        },
+    },
+    // card two
+    {
+        avatar: {
+            shrink: {
+                w: 495,
+                h: 250,
+                r: 12,
+            },
+        },
+        text: {
+            translate: { x: 500, y: 0 },
+            size: 1.6,
+        },
+    },
+    // card six
+    {
+        avatar: {
+            translate: { x: 0, y: 0 },
+            scale: 6,
+        },
+        text: {
+            translate: { x: 90, y: 40 },
+            scale: 2.4,
+        },
+    },
+    // card five
+    {
+        avatar: {
+            shrink: {
+                w: 210,
+                h: 460,
+                r: 12,
+            },
+        },
+        text: {
+            translate: { x: 500, y: 0 },
+            size: 1.6,
+        },
+    },
+    // card four
+    {
+        avatar: {
+            shrink: {
+                w: 600,
+                h: 130,
+                r: 12,
+            },
+        },
+        text: {
+            translate: { x: 500, y: 0 },
+            size: 1.6,
+        },
+    },
+];
+
+const cardDetailsEndValues = {
+    avatar: {
+        translate: { x: 0, y: 0 },
+        shrink: {
+            w: 50,
+            h: 50,
+            r: 100,
+        },
+        scale: 1,
+    },
+    text: {
+        translate: { x: 0, y: 0 },
+        size: 1.3,
+        scale: 1,
+    },
+};
+
+const endValues = { x: 0, y: 0, r: 0, h: 100, w: 600 };
+
+const calc = (start, end, factor) => {
+    return start + (end - start) * factor;
+};
+
+const handleScroll = () => {
     const cards = document.querySelectorAll('.card');
 
-    const cardStartValues = [
-        { x: -window.innerWidth * 0.45, y: -10, r: -8, h: 160, w: 320 },
-        { x: window.innerWidth * 0.45, y: -50, r: 15, h: 300, w: 220 },
-        { x: -window.innerWidth * 0.45, y: -30, r: 6, h: 300, w: 330 },
-        { x: window.innerWidth * 0.45, y: -30, r: -5, h: 400, w: 305 },
-        { x: -window.innerWidth * 0.45, y: -45, r: -20, h: 525, w: 160 },
-        { x: window.innerWidth * 0.45, y: 10, r: 10, h: 160, w: 320 },
-    ];
+    const scrollTop = window.scrollY;
+    const maxHeight = window.innerHeight;
+    const factor = scrollTop / maxHeight;
 
-    const endValues = { x: 0, y: 0, r: 0, h: 100, w: 600 };
-
-    const calc = (start, end, factor) => {
-        return start + (end - start) * factor;
-    };
-
-    const handleScroll = () => {
-        const scrollTop = window.scrollY;
-        const maxHeight = window.innerHeight;
-        const factor = scrollTop / maxHeight;
-
-        // animate card positions
-        cards.forEach((card, index) => {
-            const startValue = cardStartValues[index];
-
-            const newX = calc(startValue.x, endValues.x, factor);
-            const newY = calc(startValue.y, endValues.y, factor);
-            const newR = calc(startValue.r, endValues.r, factor);
-            const newH = calc(startValue.h, endValues.h, factor);
-            const newW = calc(startValue.w, endValues.w, factor);
-
-            if (startValue.x > 0) {
-                card.style.setProperty('--x', `${newX >= endValues.x ? newX : endValues.x}px`);
-            } else {
-                card.style.setProperty('--x', `${newX <= endValues.x ? newX : endValues.x}px`);
-            }
-
-            if (startValue.y > 0) {
-                card.style.setProperty('--y', `${newY >= endValues.y ? newY : endValues.y}%`);
-            } else {
-                card.style.setProperty('--y', `${newY <= endValues.y ? newY : endValues.y}%`);
-            }
-
-            if (startValue.r > 0) {
-                card.style.setProperty('--r', `${newR >= endValues.r ? newR : endValues.r}deg`);
-            } else {
-                card.style.setProperty('--r', `${newR <= endValues.r ? newR : endValues.r}deg`);
-            }
-
-            card.style.setProperty('--h', `${newH >= endValues.h ? newH : endValues.h}%`);
-            card.style.setProperty('--w', `${newW <= endValues.w ? newW : endValues.w}px`);
-        });
-
-        // animate card details
-
-        // animate card detail tech
-        if (factor >= 1) {
-            const codeIcons = document.querySelectorAll('.code__icon');
-
-            codeIcons.forEach((icon) => {
-                icon.classList.add('code__icon--visible');
-            });
-        } else {
-            const codeIcons = document.querySelectorAll('.code__icon');
-
-            codeIcons.forEach((icon) => {
-                icon.classList.remove('code__icon--visible');
-            });
+    // animate card positions
+    cards.forEach((card, index) => {
+        const startValue = cardStartValues[index];
+        if (!startValue) {
+            return;
         }
-    };
 
+        const newX = calc(startValue.x, endValues.x, factor);
+        const newY = calc(startValue.y, endValues.y, factor);
+        const newR = calc(startValue.r, endValues.r, factor);
+        const newH = calc(startValue.h, endValues.h, factor);
+        const newW = calc(startValue.w, endValues.w, factor);
+
+        if (startValue.x > 0) {
+            card.style.setProperty('--x', `${newX >= endValues.x ? newX : endValues.x}px`);
+        } else {
+            card.style.setProperty('--x', `${newX <= endValues.x ? newX : endValues.x}px`);
+        }
+
+        if (startValue.y > 0) {
+            card.style.setProperty('--y', `${newY >= endValues.y ? newY : endValues.y}%`);
+        } else {
+            card.style.setProperty('--y', `${newY <= endValues.y ? newY : endValues.y}%`);
+        }
+
+        if (startValue.r > 0) {
+            card.style.setProperty('--r', `${newR >= endValues.r ? newR : endValues.r}deg`);
+        } else {
+            card.style.setProperty('--r', `${newR <= endValues.r ? newR : endValues.r}deg`);
+        }
+
+        card.style.setProperty('--h', `${newH >= endValues.h ? newH : endValues.h}%`);
+        card.style.setProperty('--w', `${newW <= endValues.w ? newW : endValues.w}px`);
+
+        // animate card column
+        const startValueDetails = cardDetailsStartValues[index];
+        const cardColumn = card.querySelector('.card__column');
+        const cardAvatar = card.querySelector('.card__avatar');
+        const cardText = card.querySelector('.card__details .text');
+
+        if (startValueDetails?.avatar?.translate) {
+            const newTranslateX = calc(
+                startValueDetails.avatar.translate.x,
+                cardDetailsEndValues.avatar.translate.x,
+                factor
+            );
+            const newTranslateY = calc(
+                startValueDetails.avatar.translate.y,
+                cardDetailsEndValues.avatar.translate.y,
+                factor
+            );
+
+            if (startValueDetails.avatar.translate.x) {
+                cardAvatar.style.setProperty(
+                    '--translate-x',
+                    `${
+                        newTranslateX >= cardDetailsEndValues.avatar.translate.x
+                            ? newTranslateX
+                            : cardDetailsEndValues.avatar.translate.x
+                    }cqh`
+                );
+            }
+
+            if (startValueDetails.avatar.translate.y) {
+                cardAvatar.style.setProperty(
+                    '--translate-y',
+                    `${
+                        newTranslateY >= cardDetailsEndValues.avatar.translate.y
+                            ? newTranslateY
+                            : cardDetailsEndValues.avatar.translate.y
+                    }cqh`
+                );
+            }
+        }
+
+        if (startValueDetails?.text?.translate) {
+            const newTranslateX = calc(
+                startValueDetails.text.translate.x,
+                cardDetailsEndValues.text.translate.x,
+                factor
+            );
+            const newTranslateY = calc(
+                startValueDetails.text.translate.y,
+                cardDetailsEndValues.text.translate.y,
+                factor
+            );
+
+            if (startValueDetails.text.translate.x) {
+                cardText.style.setProperty(
+                    '--translate-x',
+                    `${
+                        newTranslateX >= cardDetailsEndValues.text.translate.x
+                            ? newTranslateX
+                            : cardDetailsEndValues.text.translate.x
+                    }cqh`
+                );
+            }
+
+            if (startValueDetails.text.translate.y) {
+                cardText.style.setProperty(
+                    '--translate-y',
+                    `${
+                        newTranslateY >= cardDetailsEndValues.text.translate.y
+                            ? newTranslateY
+                            : cardDetailsEndValues.text.translate.y
+                    }cqh`
+                );
+            }
+        }
+
+        if (startValueDetails?.avatar?.scale) {
+            const newScale = calc(startValueDetails.avatar.scale, cardDetailsEndValues.avatar.scale, factor);
+
+            cardAvatar.style.setProperty(
+                '--scale',
+                `${newScale >= cardDetailsEndValues.avatar.scale ? newScale : cardDetailsEndValues.avatar.scale}`
+            );
+        }
+
+        if (startValueDetails?.text?.size) {
+            const newSize = calc(startValueDetails.text.size, cardDetailsEndValues.text.size, factor);
+
+            cardText.style.setProperty(
+                '--size',
+                `${newSize >= cardDetailsEndValues.text.size ? newSize : cardDetailsEndValues.text.size}rem`
+            );
+        }
+
+        if (startValueDetails?.text?.scale) {
+            const newScale = calc(startValueDetails.text.scale, cardDetailsEndValues.text.scale, factor);
+
+            cardText.style.setProperty(
+                '--scale',
+                `${newScale >= cardDetailsEndValues.text.scale ? newScale : cardDetailsEndValues.text.scale}`
+            );
+        }
+
+        if (startValueDetails?.avatar?.shrink) {
+            const cardRect = card.getBoundingClientRect();
+            const newW = calc(startValueDetails?.avatar?.shrink.w, cardDetailsEndValues.avatar.shrink.w, factor);
+            const newH = calc(startValueDetails?.avatar?.shrink.h, cardDetailsEndValues.avatar.shrink.h, factor);
+            const newR = calc(startValueDetails?.avatar?.shrink.r, cardDetailsEndValues.avatar.shrink.r, factor);
+
+            cardAvatar.style.setProperty(
+                '--w-a',
+                `${newW >= cardDetailsEndValues.avatar.shrink.w ? newW : cardDetailsEndValues.avatar.shrink.w}%`
+            );
+            cardAvatar.style.setProperty(
+                '--h-a',
+                `${newH >= cardDetailsEndValues.avatar.shrink.h ? newH : cardDetailsEndValues.avatar.shrink.h}%`
+            );
+            cardAvatar.style.setProperty('--radius', `${newR}px`);
+        }
+    });
+
+    // animate card detail tech
+    if (factor >= 1) {
+        const codeIcons = document.querySelectorAll('.code__icon');
+
+        codeIcons.forEach((icon) => {
+            icon.classList.add('code__icon--visible');
+        });
+    } else {
+        const codeIcons = document.querySelectorAll('.code__icon');
+
+        codeIcons.forEach((icon) => {
+            icon.classList.remove('code__icon--visible');
+        });
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScroll);
+});
+
+window.addEventListener('resize', () => {
+    isMobile.value = window.innerWidth < 768;
 });
 </script>
