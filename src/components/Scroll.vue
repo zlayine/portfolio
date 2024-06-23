@@ -199,7 +199,7 @@
     </footer>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { computed, ref } from 'vue';
 import ReactIcon from './ReactIcon.vue';
 import VueIcon from './VueIcon.vue';
@@ -211,7 +211,7 @@ import { useEventListener } from '@vueuse/core';
 import { XMarkIcon, DocumentTextIcon, AtSymbolIcon } from '@heroicons/vue/24/outline';
 import Resume from '../assets/resumeZouheirLayine.pdf';
 
-const selectedItem = ref<string | null>(null);
+const selectedItem = ref(null);
 
 const selectedProject = computed(() => {
     return projects.find((project) => project.key === selectedItem.value);
@@ -241,7 +241,7 @@ const checkedPosition = () => {
     return true;
 };
 
-const selectedItemHandler = (item: string) => {
+const selectedItemHandler = (item) => {
     if (!checkedPosition()) {
         window.scrollTo({
             top: 1950,
@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const endValues = { x: 0, y: 0, r: 0, h: 100, w: 600 };
 
-    const calc = (start: number, end: number, factor: number) => {
+    const calc = (start, end, factor) => {
         return start + (end - start) * factor;
     };
 
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const scrollTop = window.scrollY;
         const maxHeight = window.innerHeight;
         const factor = scrollTop / maxHeight;
-        
+
         // animate card positions
         cards.forEach((card, index) => {
             const startValue = cardStartValues[index];
@@ -416,13 +416,5 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-
-    // function setCardProperties(card, x, y, r, h, w) {
-    //     card.style.setProperty('--x', x);
-    //     card.style.setProperty('--y', y);
-    //     card.style.setProperty('--r', r);
-    //     card.style.setProperty('--h', h);
-    //     card.style.setProperty('--w', w);
-    // }
 });
 </script>
