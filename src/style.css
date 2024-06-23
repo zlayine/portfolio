@@ -725,26 +725,6 @@ h1 {
     border-radius: 12px;
 }
 
-/* .cta {
-    height: var(--entity-size);
-    width: 60%;
-    background: var(--accent);
-    border-radius: 100px;
-    scale: 0;
-    --s: 1;
-    animation: morph both linear;
-    animation-timeline: --scroller;
-    animation-range: entry 0% exit 0%;
-} */
-
-/* .ring__wrapper {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    translate: 0 0%;
-} */
-
 .ring {
     position: absolute;
     top: 50%;
@@ -848,6 +828,8 @@ h1 {
 
 @keyframes grow {
     0% {
+        /* -webkit-transform: translate(var(--x, 0), var(--y, 0)); */
+        /* transform: translate(var(--x, 0), var(--y, 0)); */
         translate: var(--x, 0) var(--y, 0);
         height: var(--h, 100%);
         rotate: var(--r, 0);
@@ -860,6 +842,8 @@ h1 {
         rotate: 0deg;
         height: var(--h, 100%);
         width: calc(var(--w, 10cqi));
+        /* -webkit-transform: translate(0, var(--y, 0)); */
+        /* transform: translate(0, var(--y, 0)); */
         translate: 0 var(--y, 0);
     }
 }
@@ -1101,6 +1085,7 @@ h1 {
 
 .flip-list-enter-from {
     opacity: 0;
+    -webkit-transform: translateX(-10rem);
     transform: translateX(-10rem);
 }
 
@@ -1113,6 +1098,7 @@ h1 {
 .slide-enter-from {
     position: absolute;
     opacity: 0;
+    -webkit-transform: translateY(400px);
     transform: translateY(400px);
 }
 .slide-leave-to {

@@ -61,11 +61,11 @@
                             class="panel__row panel__row--selected"
                         >
                             <div class="card card--selected">
-                                <div
-                                    class="close--icon"
-                                    @click="selectedItem = null"
-                                >
-                                    <XMarkIcon />
+                                <div>
+                                    <XMarkIcon
+                                        class="close--icon"
+                                        @click="selectedItem = null"
+                                    />
                                 </div>
                                 <div class="card__content">
                                     <div class="card__details">
@@ -140,14 +140,6 @@
                         <GithubIcon class="social__icon" />
                     </a>
                     <a
-                        href="https://twitter.com/zlayinee"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        class="social__link"
-                    >
-                        <XIcon class="social__icon" />
-                    </a>
-                    <a
                         href="https://www.linkedin.com/in/zouheir-layine"
                         target="_blank"
                         rel="noreferrer noopener"
@@ -162,6 +154,14 @@
                         class="social__link"
                     >
                         <AtSymbolIcon class="social__icon" />
+                    </a>
+                    <a
+                        href="https://twitter.com/zlayinee"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        class="social__link"
+                    >
+                        <XIcon class="social__icon" />
                     </a>
                     <a
                         :href="Resume"
