@@ -462,7 +462,7 @@ const cardDetailsEndValues = {
 const endValues = { x: 0, y: 0, r: 0, h: 100, w: 600 };
 
 const calc = (start, end, factor) => {
-    return parseInt(start + (end - start) * factor);
+    return parseFloat(start + (end - start) * factor).toFixed(2);
 };
 
 const handleScroll = () => {
