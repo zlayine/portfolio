@@ -183,7 +183,20 @@
             </div>
         </section>
     </main>
-    <footer>ZLAYINE &copy; 2024</footer>
+    <footer>
+        <span>
+            ZLAYINE &copy; 2024 • Inspired by
+
+            <a
+                href="https://twitter.com/jh3yy"
+                target="_blank"
+                rel="noreferrer noopener"
+                class="normal__link"
+            >
+                @jh3yy
+            </a>
+        </span>
+    </footer>
 </template>
 
 <script setup lang="ts">
@@ -257,7 +270,7 @@ const projects = [
         image: 'https://i.ibb.co/Tm4qnYs/nftio.jpg',
         content:
             "NFT.io is the world's leading next-generation web3 marketplace for NFTs and crypto collectibles. Explore, create, buy, sell, and distribute NFTs and FTs",
-        flyClass: 'card--one',
+        flyClass: 'card--one card--left',
     },
     {
         key: 'evaflor',
@@ -269,7 +282,7 @@ const projects = [
         links: [{ title: 'Evaflor', url: 'https://evaflor.com' }],
         image: 'https://i.ibb.co/5WXyNcH/image.gif',
         content: "Evaflor's web3 app is a decentralized platform for buying, earning parfumes with web3 tokens.",
-        flyClass: 'card--three',
+        flyClass: 'card--three card--right',
     },
     {
         key: 'troof',
@@ -285,7 +298,7 @@ const projects = [
         image: 'https://i.ibb.co/ZHjgTfq/Screen-Shot-2024-06-18-at-23-48-45.png',
         content:
             'Troof is a participatory authentication system that enables businesses to protect their brands and their customers from counterfeiting, and to communicate information about their products to consumers',
-        flyClass: 'card--two',
+        flyClass: 'card--two card--left',
     },
     {
         key: 'leet',
@@ -297,7 +310,7 @@ const projects = [
         image: 'https://i.ibb.co/94D985z/rate-2.png',
         content:
             '1337 is the first to provide IT training in Morocco. Developped a platform for students to improve their restaurant quality and a voting system for various events.',
-        flyClass: 'card--six',
+        flyClass: 'card--six card--right',
     },
     {
         key: 'um6p',
@@ -309,7 +322,7 @@ const projects = [
         image: 'https://i.ibb.co/LQddkxg/mod-0.jpg',
         content:
             'UM6P is a university website. we have developed a platform for students to post their math problems and get help from other students.',
-        flyClass: 'card--five',
+        flyClass: 'card--five card--left',
     },
     {
         key: 'adsify',
@@ -321,11 +334,95 @@ const projects = [
         image: 'https://i.ibb.co/NTGZkBQ/adsify-1.jpg',
         content:
             'Adsify is an advertising spying platform. it allows you to spy on your competitors and see their ads on any social media',
-        flyClass: 'card--four',
+        flyClass: 'card--four card--right',
     },
 ];
 
 const shownProjects = computed(() =>
     projects.filter((project) => (selectedItem.value && project.key === selectedItem.value) || !selectedItem.value)
 );
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.card');
+
+    const cardStartValues = [
+        { x: -window.innerWidth * 0.45, y: -10, r: -8, h: 160, w: 320 },
+        { x: window.innerWidth * 0.45, y: -50, r: 15, h: 300, w: 220 },
+        { x: -window.innerWidth * 0.45, y: -30, r: 6, h: 300, w: 330 },
+        { x: window.innerWidth * 0.45, y: -30, r: -5, h: 400, w: 305 },
+        { x: -window.innerWidth * 0.45, y: -45, r: -20, h: 525, w: 160 },
+        { x: window.innerWidth * 0.45, y: 10, r: 10, h: 160, w: 320 },
+    ];
+
+    const endValues = { x: 0, y: 0, r: 0, h: 100, w: 600 };
+
+    const calc = (start: number, end: number, factor: number) => {
+        return start + (end - start) * factor;
+    };
+
+    const handleScroll = () => {
+        const scrollTop = window.scrollY;
+        const maxHeight = window.innerHeight;
+        const factor = scrollTop / maxHeight;
+        
+        // animate card positions
+        cards.forEach((card, index) => {
+            const startValue = cardStartValues[index];
+
+            const newX = calc(startValue.x, endValues.x, factor);
+            const newY = calc(startValue.y, endValues.y, factor);
+            const newR = calc(startValue.r, endValues.r, factor);
+            const newH = calc(startValue.h, endValues.h, factor);
+            const newW = calc(startValue.w, endValues.w, factor);
+
+            if (startValue.x > 0) {
+                card.style.setProperty('--x', `${newX >= endValues.x ? newX : endValues.x}px`);
+            } else {
+                card.style.setProperty('--x', `${newX <= endValues.x ? newX : endValues.x}px`);
+            }
+
+            if (startValue.y > 0) {
+                card.style.setProperty('--y', `${newY >= endValues.y ? newY : endValues.y}%`);
+            } else {
+                card.style.setProperty('--y', `${newY <= endValues.y ? newY : endValues.y}%`);
+            }
+
+            if (startValue.r > 0) {
+                card.style.setProperty('--r', `${newR >= endValues.r ? newR : endValues.r}deg`);
+            } else {
+                card.style.setProperty('--r', `${newR <= endValues.r ? newR : endValues.r}deg`);
+            }
+
+            card.style.setProperty('--h', `${newH >= endValues.h ? newH : endValues.h}%`);
+            card.style.setProperty('--w', `${newW <= endValues.w ? newW : endValues.w}px`);
+        });
+
+        // animate card details
+
+        // animate card detail tech
+        if (factor >= 1) {
+            const codeIcons = document.querySelectorAll('.code__icon');
+
+            codeIcons.forEach((icon) => {
+                icon.classList.add('code__icon--visible');
+            });
+        } else {
+            const codeIcons = document.querySelectorAll('.code__icon');
+
+            codeIcons.forEach((icon) => {
+                icon.classList.remove('code__icon--visible');
+            });
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // function setCardProperties(card, x, y, r, h, w) {
+    //     card.style.setProperty('--x', x);
+    //     card.style.setProperty('--y', y);
+    //     card.style.setProperty('--r', r);
+    //     card.style.setProperty('--h', h);
+    //     card.style.setProperty('--w', w);
+    // }
+});
 </script>

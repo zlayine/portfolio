@@ -30,8 +30,8 @@ h1 {
 body {
     min-height: 100vh;
     font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif, system-ui;
-    timeline-scope: --scroller;
-    overflow-x: clip;
+    /* timeline-scope: --scroller; */
+    /* overflow-x: clip; */
 }
 
 body::before {
@@ -100,11 +100,11 @@ section {
     padding-top: 2rem;
 }
 
-@supports (animation-timeline: scroll()) {
-    .hero {
-        position: absolute;
-    }
+/* @supports (animation-timeline: scroll()) { */
+.hero {
+    position: absolute;
 }
+/* } */
 
 .sticker {
     width: 100%;
@@ -443,6 +443,13 @@ h1 {
     position: absolute;
     width: 64px;
     height: 64px;
+    opacity: 0;
+    transition: all 1s;
+}
+
+.card__details .code__icon--visible {
+    opacity: 1;
+    transition: all 1s;
 }
 
 .react__icon,
@@ -728,9 +735,11 @@ h1 {
 .ring {
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 50%;
     width: 100%;
-    translate: 0 0%;
+    -webkit-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
+    /* translate: 0 0%; */
 }
 
 .ring--over {
@@ -770,66 +779,82 @@ h1 {
 }
 
 /* Animations */
-@supports (animation-timeline: scroll()) {
-    .card--one {
-        --x: calc(var(--span) * -1);
-        --y: -10%;
-        --r: -8deg;
-        --h: 160%;
-        --w: max(55cqi, 320px);
-    }
+/* @supports (animation-timeline: scroll()) { */
+/* 
+/*  */
+.card--one {
+    --x: calc(var(--span) * -1);
+    --y: -10%;
+    --r: -8deg;
+    --h: 160%;
+    --w: max(55cqi, 320px);
+}
 
-    .card--two {
-        --x: calc(var(--span) * -1);
-        --y: -30%;
-        --r: 6deg;
-        --h: 300%;
-        --w: max(55cqi, 330px);
-    }
+.card--two {
+    --x: calc(var(--span) * -1);
+    --y: -30%;
+    --r: 6deg;
+    --h: 300%;
+    --w: max(55cqi, 330px);
+}
 
-    .card--three {
-        --x: calc(var(--span) * 1);
-        --y: -50%;
-        --r: 15deg;
-        --h: 300%;
-        --w: max(30cqi, 220px);
-    }
+.card--three {
+    --x: calc(var(--span) * 1);
+    --y: -50%;
+    --r: 15deg;
+    --h: 300%;
+    --w: max(30cqi, 220px);
+}
 
-    .card--four {
-        --x: calc(var(--span) * 1);
-        --y: 10%;
-        --r: 10deg;
-        --h: 160%;
-        --w: max(55cqi, 320px);
-    }
+.card--four {
+    --x: calc(var(--span) * 1);
+    --y: 10%;
+    --r: 10deg;
+    --h: 160%;
+    --w: max(55cqi, 320px);
+}
 
-    .card--five {
-        --x: calc(var(--span) * -1);
-        --y: -45%;
-        --r: -20deg;
-        --h: 525%;
-        --w: max(30cqi, 160px);
-    }
+.card--five {
+    --x: calc(var(--span) * -1);
+    --y: -45%;
+    --r: -20deg;
+    --h: 525%;
+    --w: max(30cqi, 160px);
+}
 
-    .card--six {
-        --x: calc(var(--span) * 1);
-        --y: -30%;
-        --r: -5deg;
-        --h: 400%;
-        --w: max(45cqi, 305px);
-    }
+.card--six {
+    --x: calc(var(--span) * 1);
+    --y: -30%;
+    --r: -5deg;
+    --h: 400%;
+    --w: max(45cqi, 305px);
+}
 
-    .card {
-        animation: grow both linear;
-        animation-timeline: --scroller;
-        animation-range: entry 0% exit 0%;
-    }
+/* } */
+/* 
+.card {
+    animation: grow both linear;
+    animation-timeline: --scroller;
+    animation-range: entry 0% exit 0%;
+} */
+
+.card {
+    transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--r, 0));
+    height: var(--h, 100%);
+    width: var(--w, 10cqi);
+    transition: all 0.05s;
+}
+
+.animate {
+    opacity: 1;
+    transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--r, 0));
+    /* translate: var(--x, 0) var(--y, 0); */
+    height: var(--h, 100%);
+    width: var(--w, 10cqi);
 }
 
 @keyframes grow {
     0% {
-        /* -webkit-transform: translate(var(--x, 0), var(--y, 0)); */
-        /* transform: translate(var(--x, 0), var(--y, 0)); */
         translate: var(--x, 0) var(--y, 0);
         height: var(--h, 100%);
         rotate: var(--r, 0);
@@ -842,8 +867,6 @@ h1 {
         rotate: 0deg;
         height: var(--h, 100%);
         width: calc(var(--w, 10cqi));
-        /* -webkit-transform: translate(0, var(--y, 0)); */
-        /* transform: translate(0, var(--y, 0)); */
         translate: 0 var(--y, 0);
     }
 }
@@ -1105,4 +1128,9 @@ h1 {
     opacity: 0;
     height: 0;
     display: none;
+}
+
+.normal__link {
+    color: var(--accent);
+    text-decoration: underline;
 }
